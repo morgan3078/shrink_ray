@@ -12,6 +12,5 @@ declare module 'express-session' {
       username: string;
     };
     isLoggedIn: boolean;
-    logInTimeout: string;
   }
 }

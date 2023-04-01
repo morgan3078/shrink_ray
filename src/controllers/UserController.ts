@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import argon2 from 'argon2';
-import { isBefore, parseISO, formatDistanceToNow } from 'date-fns';
 import { addNewUser, getUserByUsername } from '../models/UserModel';
 import { parseDatabaseError } from '../utils/db-utils';
 
@@ -29,30 +28,17 @@ async function registerUser(req: Request, res: Response): Promise<void> {
 }
 
 async function logIn(req: Request, res: Response): Promise<void> {
-  console.log(req.session);
-
-  const now = new Date();
-  const logInTimeout = parseISO(req.session.logInTimeout);
-
-  if (logInTimeout && isBefore(now, logInTimeout)) {
-    const timeRemaining = formatDistanceToNow(logInTimeout);
-    const message = `You have ${timeRemaining} remaining.`;
-
-    res.status(429).send(message);
-    return;
-  }
-
   const { username, password } = req.body as AuthRequest;
 
   const user = await getUserByUsername(username);
   if (!user) {
-    res.sendStatus(404);
+    res.sendStatus(403);
     return;
   }
 
   const { passwordHash } = user;
   if (!(await argon2.verify(passwordHash, password))) {
-    res.sendStatus(404);
+    res.sendStatus(403);
     return;
   }
 

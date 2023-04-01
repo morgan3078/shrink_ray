@@ -12,3 +12,12 @@ type AuthRequest = {
   username: string;
   password: string;
 };
+
+type LinkIdParam = {
+  targetLinkId: string;
+  targetURL: string;
+};
+
+type UserIdParam = {
+  targetUserId: string;
+};
