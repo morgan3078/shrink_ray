@@ -77,7 +77,8 @@ async function getUserLinks(req: Request, res: Response): Promise<void> {
 async function deleteUserLink(req: Request, res: Response): Promise<void> {
   const { isLoggedIn, authenticatedUser } = req.session;
   if (!isLoggedIn) {
-    res.sendStatus(401);
+    // res.sendStatus(401);
+    res.redirect('/login');
     return;
   }
 
