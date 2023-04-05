@@ -13,9 +13,11 @@ import {
 } from './controllers/LinkController';
 
 const app: Express = express();
-const { PORT, COOKIE_SECRET } = process.env;
 
+const { PORT, COOKIE_SECRET } = process.env;
 const SQLiteStore = connectSqlite3(session);
+
+app.use(express.static('public', { extensions: ['html'] }));
 
 app.use(
   session({
@@ -28,6 +30,7 @@ app.use(
   })
 );
 
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.post('/api/users', registerUser);
