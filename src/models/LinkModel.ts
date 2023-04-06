@@ -1,7 +1,7 @@
+import { createHash } from 'crypto';
 import { AppDataSource } from '../dataSource';
 import { Link } from '../entities/Link';
 import { User } from '../entities/User';
-import { createHash } from '../crypto';
 
 const linkRepository = AppDataSource.getRepository(Link);
 
